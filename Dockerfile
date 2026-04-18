@@ -1,11 +1,11 @@
-FROM eclipse-temurin:17-jdk AS build
+FROM eclipse-temurin:17-jdk AS build                                                     
 WORKDIR /app
-COPY pom.xml .
-COPY src ./src
-RUN apk add --no-cache maven && mvn package -DskipTests -q
-
-FROM eclipse-temurin:17-jre-alpine
-WORKDIR /app
-COPY --from=build /app/target/*.jar app.jar
+COPY pom.xml .                                                                           
+COPY src ./src                                                                           
+RUN apt-get update && apt-get install -y maven && mvn package -DskipTests -q
+                                                                                           
+FROM eclipse-temurin:17-jre
+WORKDIR /app                                                                             
+COPY --from=build /app/target/*.jar app.jar                                              
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]
