@@ -7,14 +7,14 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: java-demo
+      app: saas-repo
   template:
     metadata:
       labels:
         app: saas-repo
     spec:
       containers:
-        - name: java-demo
+        - name: saas-repo
           image: localhost:5001/java-demo:latest
           ports:
             - containerPort: 8080
